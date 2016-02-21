@@ -1,0 +1,21 @@
+# Vim shit
+[._]*.s[a-w][a-z]
+[._]s[a-w][a-z]
+*.un~
+Session.vim
+.netrwhist
+*~
+
+# Vim plugins
+nvim/plugged
+nvim/autoload/plug.vim
+
+# Git local configs
+git/local
+
+# Ignore everything in coc
+coc/*
+!coc/install.sh
+!coc/extensions
+coc/extensions/*
+!coc/extensions/package.json

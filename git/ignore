@@ -1,0 +1,39 @@
+# MacOS junk
+.DS_Store
+.AppleDouble
+.LSOverride
+*~
+
+# Icon must end with two \r
+Icon
+
+# Thumbnails
+._*
+
+# Files that might appear in the root of a volume
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+
+# Directories potentially created on remote AFP share
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+# Vim stuff..
+*.swap
+.netrwhist
+.xmark.*.md.html
+
+.tern-port
+
+# Python stuff
+.ropeproject
+__pycache__/
+*.py[cod]
+*$py.class

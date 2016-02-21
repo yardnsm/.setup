@@ -1,0 +1,112 @@
+# vim: set foldmethod=marker foldlevel=0:
+
+[include]
+  path = ~/.config/git/local
+
+# Core {{{
+
+[core]
+  excludesfile = ~/.config/git/ignore
+  pager = diff-so-fancy | less --tabs=2 -RFX
+  editor = nvim
+
+[user]
+  useConfigOnly = true
+	name = Yarden Sod-Moriah
+	email = yardnsm@gmail.com
+
+[commit]
+  verbose = true
+
+[push]
+  default = current
+  followTags = true
+
+[pull]
+  rebase = true
+
+# }}}
+# Merges and diffs {{{
+
+[mergetool "vimdiff"]
+  cmd = nvim -d $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
+  trustExitCode = true
+
+[mergetool "fugitive"]
+  cmd = nvim -f -c "Gvdiff" "$MERGED"
+  trustExitCode = true
+
+[mergetool]
+  prompt = true
+
+[merge]
+  tool = fugitive
+
+[difftool]
+  prompt = false
+
+[diff]
+  tool = vimdiff
+
+[rerere]
+  # Enable Reuse Recorded Resolution
+  enabled = true
+
+# }}}
+# Aliases {{{
+
+[alias]
+  ua = reset HEAD
+  c = commit
+  ca = commit -a
+  cm = commit -m
+  cam = commit -am
+  co = checkout
+  d = diff
+  s = status -sb
+
+  l = log --graph --pretty=format:'%C(green bold)%h %C(blue)- %an, %ar%Creset%x09- %Creset%s %C(blue)%d'
+  ll = log --stat --abbrev-commit
+  rank = shortlog -sn
+  my = !git log --branches=* --no-merges --pretty=format:'%C(yellow bold)%h %Cblue%ad%Cgreen%d %Creset%s' --author=\"$(git config user.name)\"
+
+  reset-hard = reset --hard HEAD
+  clean-untracked = !git clean -nd && echo "==!== ARE YOU SURE? [type 'yes' to confirm] ==!==" && read -r && [[ "$REPLY" == "yes" ]] && git clean -fd || echo "ABORTED!"
+  clean-ignored = !git clean -nXd && echo "==!== ARE YOU SURE? [type 'yes' to confirm] ==!==" && read -r && [[ "$REPLY" == "yes" ]] && git clean -fXd || echo "ABORTED!"
+  clean-all = !git clean -nxd && echo "==!== ARE YOU SURE? [type 'yes' to confirm] ==!==" && read -r && [[ "$REPLY" == "yes" ]] && git clean -fXd || echo "ABORTED!"
+
+# }}}
+# Colors {{{
+
+[color]
+  diff = auto
+  status = auto
+  branch = auto
+  interactive = auto
+  ui = auto
+
+[color "branch"]
+  current = green bold
+  local = green
+  remote = yellow
+
+[color "diff"]
+  frag = magenta
+  meta = yellow
+  new = green
+  old = red
+
+[color "status"]
+  added = green reverse
+  changed = yellow reverse
+  untracked = red reverse
+
+# }}}
+# Git LFS {{{
+
+[filter "lfs"]
+  clean = git-lfs clean %f
+  smudge = git-lfs smudge %f
+  required = true
+
+# }}}
