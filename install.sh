@@ -1,22 +1,12 @@
 #!/usr/bin/env bash
 
-declare __TOPICS=()
+cd "$(dirname "${BASH_SOURCE[0]}")" \
+  && source "./.setup/initializer.sh"
 
 # --------------------------------------------------------------------------------------------------
 
-__consume_topics() {
-  while [[ -n "$1" ]]; do
-    if topics::exists "$1"; then
-      __TOPICS+=( "$1" )
-    else
-      echo
-      output::error "Error: topic $1 does not exist!"
-      exit 1
-    fi
-
-    shift
-  done
-}
+export SETUP_ROOT="$(pwd)"
+export CONFIG_ROOT="$HOME/.config"
 
 # --------------------------------------------------------------------------------------------------
 
@@ -50,7 +40,7 @@ EOF
 }
 
 __init_submodules() {
-  pushd "$DOTFILES" &> /dev/null \
+  pushd "$CONFIG_ROOT" &> /dev/null \
     || return 1
 
   commands::execute "git submodule update --init --recursive --remote -q" \
@@ -59,57 +49,61 @@ __init_submodules() {
   popd &> /dev/null \
     || return 1
 }
+
 # --------------------------------------------------------------------------------------------------
 
-command::install() {
+main() {
+  export PROFILE=$1
 
-  __consume_topics "$@"
+  declare -r PROFILE_PATH="./.profiles/$PROFILE"
+
+  if [[ -z "$PROFILE" ]]; then
+    output::error "Missing profile"
+    output::help
+    exit 1
+  fi
+
+  if ! [[ -f "$PROFILE_PATH" ]]; then
+    output::error "Unknown profile: $PROFILE"
+    output::help
+    exit 1
+  fi
+
+  # Load profile
+  source "$PROFILE_PATH"
+
+  # Make sure it exported the good stuff
+  if [[ -z "$SYMLINKS" ]] || [[ -z "$TOPICS" ]]; then
+    output::error "Profile $PROFILE does not export \$SYMLINKS ot \$TOPICS"
+    exit 1
+  fi
 
   output::welcome_message
 
-  if [[ "$OPT_DEBUG_LOG" -eq 1 ]]; then
-    commands::init_output_file
-  fi
-
-  if [[ ${#__TOPICS} -ne 0 ]]; then
-    echo
-
-    if [[ "$OPT_EXCLUDE" -eq 1 ]]; then
-      output::status "Topics to exclude: ${__TOPICS[*]}"
-    else
-      output::status "Topics to install: ${__TOPICS[*]}"
-    fi
-  fi
-
-  echo
-
   # Run checks
+  __init_submodules
   __check_os
   __check_xcode_tools
 
-  if [[ "$OPT_INIT" -eq 1 ]]; then
-    __init_submodules
-  fi
-
   # Ask if it's okay
-  if ! [[ "$OPT_YES" -eq 1 ]]; then
+  if ! os::is_ci; then
     output::info "Just to make sure"
     ask::prompt_confirmation "Continue? "
   fi
 
   # Check if answer is yes
-  if ! ( ask::answer_is_yes || [[ $OPT_YES -eq 1 ]] ); then
+  if ! ( ask::answer_is_yes || os::is_ci ); then
     output::error "Error: aborted"
     exit 1
   fi
 
   ask::check_sudo
 
-  if [[ "$OPT_EXCLUDE" -eq 1 ]]; then
-    topics::install_multiple "" "${__TOPICS[*]}"
-  else
-    topics::install_multiple "${__TOPICS[*]}"
-  fi
+  # Install!
+  topics::install_multiple "${TOPICS[*]}"
 
   output::info "Setup is done! You might need to restart your system to see full changes."
 }
+
+echo
+main "$@"

@@ -6,7 +6,7 @@ cd "$(dirname "${BASH_SOURCE[0]}")" \
 # ---------------------------------------------
 
 main() {
-  cd extensions \
+  cd "$CONFIG_ROOT/coc/extensions" \
     || return 1
 
   output::info "Installing extensions"

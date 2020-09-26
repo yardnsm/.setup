@@ -27,8 +27,6 @@ if [[ -z "$__initialized" ]]; then
   source "./lib/os.sh"
   source "./lib/output.sh"
   source "./lib/spinner.sh"
-
-  source "./variables.sh"
 fi
 
 # ---------------------------------------------

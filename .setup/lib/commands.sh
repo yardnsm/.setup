@@ -1,28 +1,6 @@
 #!/usr/bin/env bash
 
-# ---------------------------------------------
-
-declare __COMMANDS_OUTPUT_FILE
-
-# ---------------------------------------------
-
-commands::init_output_file() {
-
-  # Use DEBUG_LOG_PATH variable if exists
-  if [[ -n "$DEBUG_LOG_PATH" ]]; then
-    __COMMANDS_OUTPUT_FILE="$DEBUG_LOG_PATH"
-  else
-
-    # Use a temporary file
-    __COMMANDS_OUTPUT_FILE="$(mktemp)-$(date --iso-8601=seconds).dotfiles.log"
-  fi
-
-  # Add a modeline for enabling Vim folds
-  echo -e "vim: set foldmethod=marker foldlevel=0:\n" >> "$__COMMANDS_OUTPUT_FILE"
-
-  echo
-  output::status "Output file is set to $__COMMANDS_OUTPUT_FILE"
-}
+# --------------------------------------------------------------------------------------------------
 
 # Check if a command exists
 commands::exists() {
@@ -34,20 +12,16 @@ commands::exists() {
 commands::execute() {
   local -r CMD="$1"
   local -r MSG="$2"
+  local -r TMP_FILE="$(mktemp /tmp/XXXXX)"
 
   local exit_code=0
   local pid=""
 
-  # Fill up output file
-  if [[ -n "$__COMMANDS_OUTPUT_FILE" ]]; then
-    cat >> "$__COMMANDS_OUTPUT_FILE" <<EOF
-'$CMD' in ${BASH_SOURCE[1]}:${BASH_LINENO[0]} ${FUNCNAME[1]} {{{
-
-EOF
-  fi
-
   # Run command and append output to output file
-  eval "$CMD" >> "${__COMMANDS_OUTPUT_FILE:-/dev/null}" 2>&1 &
+  eval "$CMD" \
+    &> /dev/null \
+    2> "$TMP_FILE" &
+
   pid="$!"
 
   spinner:show_for_process $pid "${MSG:-$CMD}"
@@ -55,16 +29,14 @@ EOF
   wait $pid &> /dev/null
   exit_code=$?
 
-  # Write exit code to output file
-  if [[ -n "$__COMMANDS_OUTPUT_FILE" ]]; then
-    cat >> "$__COMMANDS_OUTPUT_FILE" <<EOF
+  output::result $exit_code "${MSG:-$CMD}"
 
-Finished with exit code $exit_code
-
-}}}
-EOF
+  # Print stderr of an error occured
+  if [[ $exit_code -ne 0 ]]; then
+    output::error_stream < "$TMP_FILE"
   fi
 
-  output::result $exit_code "${MSG:-$CMD}"
+  rm -rf "$TMP_FILE"
+
   return $exit_code
 }

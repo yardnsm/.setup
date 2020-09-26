@@ -80,22 +80,60 @@ output::divider() {
   printf "\\n"
 }
 
+output::error_stream() {
+  while read -r line; do
+    print_error "↳ ERROR: $line"
+  done
+}
+
 # Print welcome message
 output::welcome_message() {
 
   tput cl
 
   # shellcheck disable=SC1117
-  output::blue "
-          __        __   ____ __ __
-     ____/ /____   / /_ / __//_// /___   _____
-    / __  // __ \ / __// /_ / // // _ \ / ___/
-   / /_/ // /_/ // /_ / __// // //  __//__  /
-   \__,_/ \____/ \__//_/  /_//_/ \___//____/
+  output::blue '
+                                     ._
+                                   ,(  `-.
+                                 ,'\'': `.   `.
+                               ,` *   `-.   \
+                             ,'\''  ` :+  = `.  `.
+                           ,~  (o):  .,   `.  `.
+                         ,'\''  ; :   ,(__) x;\`.  ;
+                       ,'\''  :'\''  itz  ;  ; ; _,-'\''
+                     .'\''O ; = _'\'' C ; ;'\''_,_ ;
+                   ,;  _;   ` : ;'\''_,-'\''   i'\''
+                 ,` `;(_)  0 ; '\'','\''       :
+               .'\'';6     ; '\'' ,-'\''~
+             ,'\'' Q  ,& ;'\'',-.'\''
+           ,( :` ; _,-'\''~  ;
+         ,~.`c _'\'','\''                  __
+       .'\'';^_,-'\'' ~         ________  / /___  ______
+     ,'\''_;-'\'''\''             / ___/ _ \/ __/ / / / __ \
+    ,,~               _ (__  )  __/ /_/ /_/ / /_/ /
+    i'\''               (_)____/\___/\__/\__,_/ .___/
+    :                                     /_/
 
-     https://github.com/yardnsm/dotfiles/
+     https://github.com/yardnsm/.setup/
 
-"
+'
 
-  output::cyan "     $(tput bold)Base dir:$(tput sgr0) \\t ~${DOTFILES#$HOME} \\n"
+  output::cyan "     $(tput bold)Base dir:$(tput sgr0) \\t ~${CONFIG_ROOT#$HOME} \\n"
+  output::cyan "     $(tput bold) Profile:$(tput sgr0) \\t ${PROFILE} \\n"
+  output::cyan "     $(tput bold)  Topics:$(tput sgr0) \\t ${TOPICS} \\n\\n"
+}
+
+output::help() {
+  cat <<EOF
+
+  yardnsm's setup scripts
+
+  Usage
+
+    ./install.sh <profile>
+
+  Available profiles:
+
+    $(ls "$SETUP_ROOT/.profiles")
+EOF
 }

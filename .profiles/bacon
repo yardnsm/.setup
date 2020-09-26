@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+
+# --------------------------------------------------------------------------------------------------
+
+export SYMLINKS=(
+  "zsh/.zshenv"
+  "tmux/tmux.conf .tmux.conf"
+)
+
+export TOPICS=(
+  common
+
+  coc
+  fnm
+  homebrew
+  macos
+  npm
+  nvim
+  phpbrew
+  python
+  ruby
+  ssh
+  tmux
+  zsh
+)
