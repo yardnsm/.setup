@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+# Profile for "bacon": my main macOS workstation.
 # --------------------------------------------------------------------------------------------------
 
 export SYMLINKS=(

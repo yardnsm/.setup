@@ -7,6 +7,7 @@ cd "$(dirname "${BASH_SOURCE[0]}")" \
 
 export SETUP_ROOT="$(pwd)"
 export CONFIG_ROOT="$HOME/.config"
+export CONFIG_GIT_REMOTE="https://github.com/yardnsm/.config.git"
 
 # --------------------------------------------------------------------------------------------------
 
@@ -37,6 +38,24 @@ EOF
       output::success "Xcode Command Line tools are installed"
     fi
   fi
+}
+
+# --------------------------------------------------------------------------------------------------
+
+__init_config_repo() {
+  if [[ -d "$CONFIG_ROOT" ]]; then
+    if [[ -d "$CONFIG_ROOT/.git" ]]; then
+      output::success "Base dir exists"
+      return 0
+    else
+      output::error "Base dir is not a git repository; aborting."
+      exit 1
+    fi
+  fi
+
+  # Clone the repo!
+  commands::execute "git clone $CONFIG_GIT_REMOTE $CONFIG_ROOT" \
+    "Cloning base dir"
 }
 
 __init_submodules() {
@@ -81,6 +100,7 @@ main() {
   output::welcome_message
 
   # Run checks
+  __init_config_repo
   __init_submodules
   __check_os
   __check_xcode_tools

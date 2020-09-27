@@ -1,42 +1,39 @@
 name: main
 
-on: [push]
+on: [push, pull_request]
 
 env:
   TERM: xterm-256color
-  DEBUG_LOG_PATH: /tmp/dotfiles.debug.log
 
 jobs:
   main:
-    name: Install and test the dotfiles
+    name: Run the setup scripts
     runs-on: ${{ matrix.os }}
 
     strategy:
       matrix:
         os: [ubuntu-latest, macOS-latest]
+        profilea: [bacon]
 
     steps:
 
       - name: Checking-out repository
         uses: actions/checkout@v2
         with:
-          path: dotfiles
+          path: .setup
 
       - name: Setting repository in $HOME
         run: |
-          mv -f $GITHUB_WORKSPACE/dotfiles $HOME/dotfiles
+          mkdir $HOME/dev/.setup
+          mv -f $GITHUB_WORKSPACE/.setup $HOME/dev/.setup
 
       - name: Running installation script
         continue-on-error: true
         run: |
-          cd $HOME/dotfiles
-          ./.setup/dots install --yes --debug-log
-
-      - name: Printing out debug log
-        run: |
-          cat $DEBUG_LOG_PATH
+          cd $HOME/dev/.setup
+          ./install ${{ matrix.profile }}
 
       - name: Running tests
         run: |
-          cd $HOME/dotfiles
+          cd $HOME/dev/.setup
           ./.test/shellcheck.sh

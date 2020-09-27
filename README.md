@@ -1,69 +1,68 @@
-# dotfiles
+# .setup
 
-[![Build Status](https://github.com/yardnsm/dotfiles/workflows/main/badge.svg)](https://github.com/yardnsm/dotfiles/actions)
+[![Build Status](https://github.com/yardnsm/.setup/workflows/main/badge.svg)](https://github.com/yardnsm/.setup/actions)
 
-These are my dotfiles. A collection of zsh, git, vim and macOS configurations. I built this repo
-from scratch, while focus on organization.
+These are my setup scripts for setting up a new machine. It installs my
+[dotfiles](https://github.com/yardnsm/.config), which placed by default under `~/.config`.
 
 ## Installation
 
 Simply run the following commands in your terminal:
 
 ```bash
-# Clone the repository
-$ git clone https://github.com/yardnsm/dotfiles ~/dotfiles
+# Clone this repository
+$ git clone https://github.com/yardnsm/.setup ~/dev/.setup
 
 # Run the installation script
-$ cd dotfiles
-$ ./.setup/dots --init
+$ cd dev/.setup
+$ ./install.sh
 ```
 
 ## Order and hierarchy
 
-- Every non-hidden directory is considered as a "topic". A topic can have an `install.sh` file that
-  will run when installing the dotfiles.
-- [`.symlinks`](./.symlinks) contains a list of the directories / files to symlink.
-- `init.zsh` files inside each topic will be sourced when the shell loads.
+A "profile" is shell scripts that sets up environment variables which configure the installation of
+the dotfiles. They are located under [`./.profiles`](./.profiles) and should export the following
+environment variables:
 
-## `dots`
+### `$SYMLINKS`
 
-[`dots`](./.setup/dots) is an executable for managing the dotfiles. It will manage every topic's
-installation. You can pass some options to exclude certain topics from installation, or set specific
-topics to install.
+An array that contains the files to symlink from the dotfiles repository to `$HOME`, or any other
+directory on the system.
 
+```bash
+export SYMLINKS=(
+  # By default, items will be symlinked from the dotfiles repository (located under ~/.config) to
+  # $HOME.
+
+  # This will symlink ~/.config/zsh/.zshenv to ~/.zshenv
+  "zsh/.zshenv"
+
+  # You can specify a name for the target. The following will symlink ~/.config/tmux/tmux.conf to
+  # ~/.tmux.conf
+  "tmux/tmux.conf .tmux.conf"
+
+  # Of course, you can symlinks files to anywhere in the system. The following will symlink
+  # ~/.config/bash/bashrc to /etc/bashrc
+  "bash/bashrc /etc/bashrc"
+)
 ```
-$ dots
 
-  yardnsm's dotfiles maintenance
+### `$TOPICS`
 
-  Usage
+Every non-hidden directory in this repo is considered as a "topic". A topic must have an
+`install.sh` file that will run during the installation of this repo.
 
-    dots <command> [options] [...topics]
+The `$TOPICS` variable specifies the topics to run when installing the profile.
 
-  Commands
-
-    install [...topics]  Run the installation script for every topic
-    symlink              Run the symlinking process
-    list                 List all topics
-
-  Options
-
-    --init               Initialize git submodules
-    -a, --all            Show all topics in 'list'
-    -y, --yes            Skip confirmation questions
-    -e, --exclude        Exclude [...topics] from installation
-    -d, --debug-log      Puke debug output to a log file
-    -b, --base-dir       Set the dotfiles directory to run from
-    -D, --dry-run        Check the symlinking operations
-    -h, --help           Show help output
-
-  Examples
-
-    $ dots install common git
-    $ dots install --exclude npm homebrew
-
-    # Install another dotfiles repo that follows the same structure
-    $ dots install -b ~/dotfiles-local
+```bash
+export TOPICS=(
+  common
+  homebrew
+  macos
+  nvim
+  ssh
+  zsh
+)
 ```
 
 ----------------------------------------------------------------------------------------------------
