@@ -24,7 +24,7 @@ jobs:
 
       - name: Setting repository in $HOME
         run: |
-          mkdir $HOME/dev/.setup
+          mkdir -p $HOME/dev/.setup
           mv -f $GITHUB_WORKSPACE/.setup $HOME/dev/.setup
 
       - name: Running installation script
