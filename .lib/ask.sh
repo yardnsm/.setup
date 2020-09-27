@@ -29,12 +29,6 @@ ask::get_answer() {
 
 # Ask for sudo permission
 ask::prompt_sudo() {
-
-  # Travis has an issue with `sudo` on mac, so we'll just wont use it for now.
-  if os::is_ci; then
-    return 1
-  fi
-
   sudo -v &> /dev/null
 
   # Update the sudo timestamp till the script will finish
