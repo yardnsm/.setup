@@ -28,6 +28,43 @@ install_plugins() {
   fi
 }
 
+setup_python_venv() {
+  local -r venv_name="$1"
+  local -r python_version="$2"
+
+  output::info "Setting Virtual Environment '$venv_name' with version $python_version"
+
+  eval "$(command pyenv init -)"
+
+  if ! commands::exists 'pyenv'; then
+    output:error "pyenv does not exist; skipping."
+    return 1
+  fi
+
+  if pyenv virtualenvs | awk '{ print $1 }' | grep -q "$python_version/envs/$venv_name"; then
+    output::status "Virtualenv '$venv_name' already exists; skipping."
+    return 0
+  fi
+
+  commands::execute "pyenv install $python_version" \
+    "Installing Python $python_version"
+
+  commands::execute "pyenv virtualenv $python_version $venv_name" \
+    "Creating a virtualenv $venv_name"
+
+  pyenv activate "$venv_name"
+  output::result "$?" " --> Activating virtualenv $venv_name"
+
+  commands::execute "pip install neovim pynvim" \
+    "Installing neovim pip module"
+
+  commands::execute "pip install python-language-server jedi" \
+    "Installing additional pipes"
+
+  pyenv deactivate
+  output::result "$?" " <-- De-activating virtualenv $venv_name"
+}
+
 # --------------------------------------------------------------------------------------------------
 
 main() {
@@ -37,13 +74,8 @@ main() {
   output::info "Installing plugins"
   install_plugins
 
-  output::info "Setting up python virtualenvs for neovim"
-  output:status "Please run the the following command manualy:"
-
-  cat << EOF
-
-        source $(pwd)/setup-python-env.sh
-EOF
+  setup_python_venv "neovim3" "3.6.3"
+  setup_python_venv "neovim2" "2.7.13"
 }
 
 main "$@"

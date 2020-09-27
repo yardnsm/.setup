@@ -81,8 +81,10 @@ output::divider() {
 }
 
 output::error_stream() {
+  echo
+
   while read -r line; do
-    print_error "↳ ERROR: $line"
+    echo "↳ ERROR: $line"
   done
 }
 
@@ -120,7 +122,7 @@ output::welcome_message() {
 
   output::cyan "     $(tput bold)Base dir:$(tput sgr0) \\t ~${CONFIG_ROOT#$HOME} \\n"
   output::cyan "     $(tput bold) Profile:$(tput sgr0) \\t ${PROFILE} \\n"
-  output::cyan "     $(tput bold)  Topics:$(tput sgr0) \\t ${TOPICS} \\n\\n"
+  output::cyan "     $(tput bold)  Topics:$(tput sgr0) \\t ${TOPICS[*]} \\n\\n"
 }
 
 output::help() {

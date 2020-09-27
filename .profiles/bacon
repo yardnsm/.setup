@@ -9,10 +9,10 @@ export SYMLINKS=(
 
 export TOPICS=(
   common
+  homebrew
 
   coc
   fnm
-  homebrew
   macos
   npm
   nvim
