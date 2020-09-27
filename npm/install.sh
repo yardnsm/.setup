@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
 cd "$(dirname "${BASH_SOURCE[0]}")" \
-  && source "../.setup/initializer.sh"
+  && source "../.lib/initializer.sh"
 
-# ---------------------------------------------
+# --------------------------------------------------------------------------------------------------
 
 declare -r dependencies=(
   'bower'
@@ -37,7 +37,7 @@ declare -r dependencies=(
   'stylelint-config-standard'
 )
 
-# ---------------------------------------------
+# --------------------------------------------------------------------------------------------------
 
 main() {
   output::info "Installing NPM global dependencies"

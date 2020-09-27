@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
 cd "$(dirname "${BASH_SOURCE[0]}")" \
-  && source "../.setup/initializer.sh"
+  && source "../.lib/initializer.sh"
 
-# ---------------------------------------------
+# --------------------------------------------------------------------------------------------------
 
 main() {
   output::info "Installing plugins"

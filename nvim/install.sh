@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 cd "$(dirname "${BASH_SOURCE[0]}")" \
-  && source "../.setup/initializer.sh"
+  && source "../.lib/initializer.sh"
 
 # --------------------------------------------------------------------------------------------------
 
@@ -28,7 +28,7 @@ install_plugins() {
   fi
 }
 
-# ---------------------------------------------
+# --------------------------------------------------------------------------------------------------
 
 main() {
   output::info "Installing vim-plug"
@@ -36,6 +36,14 @@ main() {
 
   output::info "Installing plugins"
   install_plugins
+
+  output::info "Setting up python virtualenvs for neovim"
+  output:status "Please run the the following command manualy:"
+
+  cat << EOF
+
+        source $(pwd)/setup-python-env.sh
+EOF
 }
 
 main "$@"

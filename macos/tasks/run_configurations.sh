@@ -3,7 +3,7 @@
 # Based on alrra"s .osx file, with a few custom settings:
 # https://github.com/alrra/dotfiles/raw/master/os/os_x/preferences/set_ui_and_ux_preferences.sh
 
-# ---------------------------------------------
+# --------------------------------------------------------------------------------------------------
 
 output::info "General UI/UX"
 
@@ -43,7 +43,7 @@ commands::execute "defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveM
 commands::execute "defaults write NSGlobalDomain PMPrintingExpandedStateForPrint -bool true" \
   "Expand print panel by default"
 
-# ---------------------------------------------
+# --------------------------------------------------------------------------------------------------
 
 output::info "Trackpad and keyboard"
 
@@ -69,7 +69,7 @@ commands::execute "defaults write com.apple.universalaccess closeViewScrollWheel
   defaults write com.apple.universalaccess HIDScrollZoomModifierMask -int 262144" \
   "Use scroll gesture with the Ctrl (^) modifier key to zoom"
 
-# ---------------------------------------------
+# --------------------------------------------------------------------------------------------------
 
 output::info "Language and Region"
 
@@ -82,7 +82,7 @@ commands::execute "defaults write NSGlobalDomain AppleMeasurementUnits -string '
 commands::execute "defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false" \
   "Disable auto-correct"
 
-# ---------------------------------------------
+# --------------------------------------------------------------------------------------------------
 
 output::info "Finder"
 
@@ -111,7 +111,7 @@ commands::execute "defaults write com.apple.finder ShowStatusBar -bool true" \
 commands::execute "defaults write com.apple.finder QLEnableTextSelection -bool true" \
   "Allow text selection in Quick Look"
 
-# ---------------------------------------------
+# --------------------------------------------------------------------------------------------------
 
 output::info "Dock and Dashboard"
 
@@ -136,7 +136,7 @@ commands::execute "defaults write com.apple.dock show-recents -bool false" \
 commands::execute "defaults write com.apple.dock autohide-time-modifier -float 0.5" \
   "Speed-up the animation when hiding/showing the Dock"
 
-# ---------------------------------------------
+# --------------------------------------------------------------------------------------------------
 
 output::info "Safari"
 
@@ -170,7 +170,7 @@ commands::execute "defaults write com.apple.Safari SuppressSearchSuggestions -bo
 commands::execute "defaults write NSGlobalDomain WebKitDeveloperExtras -bool true" \
   "Add a context menu item for showing the 'Web Inspector' in web views"
 
-# ---------------------------------------------
+# --------------------------------------------------------------------------------------------------
 
 output::info "Mac Applications"
 
@@ -184,7 +184,7 @@ commands::execute "defaults write com.apple.TextEdit RichText -" \
 commands::execute "defaults -currentHost write com.apple.ImageCapture disableHotPlug -bool true" \
   "Prevent Photos from opening automatically when devices are plugged in"
 
-# ---------------------------------------------
+# --------------------------------------------------------------------------------------------------
 
 output::info "Time Machine"
 

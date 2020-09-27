@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# ---------------------------------------------
+# --------------------------------------------------------------------------------------------------
 
 output::info "Transmission"
 
@@ -21,7 +21,7 @@ commands::execute "defaults write org.m0k.transmission WarningDonate -bool false
 commands::execute "defaults write org.m0k.transmission WarningLegal -bool false" \
   "Hide the legal disclaimer"
 
-# ---------------------------------------------
+# --------------------------------------------------------------------------------------------------
 
 output::info "Google Chrome"
 
@@ -34,7 +34,7 @@ commands::execute "defaults write com.google.Chrome PMPrintingExpandedStateForPr
 commands::execute "defaults write com.google.Chrome DisablePrintPreview -bool true" \
   "Use system-native print preview dialog"
 
-# ---------------------------------------------
+# --------------------------------------------------------------------------------------------------
 
 output::info "iTerm2"
 

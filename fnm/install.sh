@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 
 cd "$(dirname "${BASH_SOURCE[0]}")" \
-  && source "../.setup/initializer.sh"
+  && source "../.lib/initializer.sh"
 
-# ---------------------------------------------
+# --------------------------------------------------------------------------------------------------
 
 declare -r FNM_DIR="$HOME/.fnm"
 declare -r FNM_INSTALL_FILE="https://raw.githubusercontent.com/Schniz/fnm/master/.ci/install.sh"
 
-# ---------------------------------------------
+# --------------------------------------------------------------------------------------------------
 
 main() {
   output::info "Installing fnm"
