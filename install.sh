@@ -55,17 +55,7 @@ __init_config_repo() {
 
   commands::execute "git clone $CONFIG_GIT_REMOTE $CONFIG_ROOT" \
     "Cloning base dir"
-}
 
-__init_submodules() {
-  pushd "$CONFIG_ROOT" &> /dev/null \
-    || return 1
-
-  commands::execute "git submodule update --init --recursive --remote -q" \
-    "Initializing git modules"
-
-  popd &> /dev/null \
-    || return 1
 }
 
 __init_secrets() {
@@ -76,6 +66,23 @@ __init_secrets() {
     commands::execute "sed 's/^.*\({{.*}}\).*$/s\/\1\/value\//' clean.sed > smudge.sed" \
       "Creating a smudge.sed file for secrets"
   fi
+
+  commands::execute "git config --local filter.vault.clean 'sed -f ~/.config/clean.sed'" \
+    "Setting 'clean' filter"
+
+  commands::execute "git config --local filter.vault.smudge 'sed -f ~/.config/smudge.sed'" \
+    "Setting 'smudge' filter"
+
+  popd &> /dev/null \
+    || return 1
+}
+
+__init_submodules() {
+  pushd "$CONFIG_ROOT" &> /dev/null \
+    || return 1
+
+  commands::execute "git submodule update --init --recursive --remote -q" \
+    "Initializing git modules"
 
   popd &> /dev/null \
     || return 1
@@ -115,10 +122,10 @@ main() {
   __check_os
   __check_xcode_tools
 
-  # Initialize required shit
+  output::info "Initializing base dir"
   __init_config_repo
-  __init_submodules
   __init_secrets
+  __init_submodules
 
   # Ask if it's okay
   if ! os::is_ci; then

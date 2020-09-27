@@ -46,6 +46,7 @@ jobs:
           ./install.sh ${{ matrix.profile }}
 
       - name: Running tests
+        if: ${{ matrix.os != 'ubuntu-latest' }} # shellcheck in Ubuntu is very outdated
         run: |
           cd $HOME/dev/.setup
           ./.test/shellcheck.sh
