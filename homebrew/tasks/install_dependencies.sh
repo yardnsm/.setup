@@ -17,7 +17,6 @@ declare -r formulae=(
 
   'Schniz/tap/fnm'
   'node'
-  'yarn'
 
   'python'
   'python3'
@@ -35,7 +34,6 @@ declare -r formulae=(
   'wget'
   'tig'
   'fzf'
-  'heroku'
   'httpie'
   'jq'
   'diff-so-fancy'
@@ -68,6 +66,8 @@ declare -r formulae=(
   # 'sudolikeaboss'
   # 'hub'
   # 'git-extras'
+  # 'yarn'
+  # 'heroku'
 )
 
 # --------------------------------------------------------------------------------------------------

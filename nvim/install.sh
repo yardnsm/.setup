@@ -52,7 +52,7 @@ setup_python_venv() {
   commands::execute "pyenv virtualenv $python_version $venv_name" \
     "Creating a virtualenv $venv_name"
 
-  pyenv activate "$venv_name"
+  pyenv activate "$venv_name" &> /dev/null
   output::result "$?" " --> Activating virtualenv $venv_name"
 
   commands::execute "pip install neovim pynvim" \
@@ -61,7 +61,7 @@ setup_python_venv() {
   commands::execute "pip install python-language-server jedi" \
     "Installing additional pipes"
 
-  pyenv deactivate
+  pyenv deactivate &> /dev/null
   output::result "$?" " <-- De-activating virtualenv $venv_name"
 }
 

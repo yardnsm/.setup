@@ -5,8 +5,14 @@ cd "$(dirname "${BASH_SOURCE[0]}")" \
 
 # --------------------------------------------------------------------------------------------------
 
-declare -r FNM_DIR="$HOME/.fnm"
+declare -r FNM_DIR="${XDG_DAATA_HOME:-$HOME/.local/share}/.fnm"
 declare -r FNM_INSTALL_FILE="https://raw.githubusercontent.com/Schniz/fnm/master/.ci/install.sh"
+
+# --------------------------------------------------------------------------------------------------
+
+# We're installing fnm via Homebrew under macOS
+os::verify "macos" \
+  && return 1
 
 # --------------------------------------------------------------------------------------------------
 

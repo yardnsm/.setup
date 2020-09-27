@@ -11,30 +11,31 @@ declare -r dependencies=(
   'gulp'
   'nodemon'
   'json-server'
-  'yo'
   'npm-upgrade'
   'trymodule'
   'np'
   'firebase-tools'
-  'tern'
-  'tern-jsx'
   'ava'
-  'hicat'
-  'typescript'
   'bs-platform'
-
-  'javascript-typescript-langserver'
-  'vscode-css-languageserver-bin'
-  'typescript-language-server'
-  'vscode-html-languageserver-bin'
-  'bash-language-server'
-  'stylable-intelligence'
-
   'speed-test'
-  'fast-cli'
-  'emoj'
 
   'stylelint-config-standard'
+
+  # ---[ Retired ]----------------------------------------------------------------------------------
+
+  # 'hicat'
+  # 'yo'
+  # 'typescript'
+  # 'tern'
+  # 'tern-jsx'
+  # 'fast-cli'
+  # 'emoj'
+  # 'javascript-typescript-langserver'
+  # 'vscode-css-languageserver-bin'
+  # 'typescript-language-server'
+  # 'vscode-html-languageserver-bin'
+  # 'bash-language-server'
+  # 'stylable-intelligence'
 )
 
 # --------------------------------------------------------------------------------------------------

@@ -11,23 +11,22 @@ declare -r applications=(
   'android-studio'
   'visual-studio-code'
 
-
   '1password'
   '1password-cli'
 
-  'java'
+  'oracle-jdk'
+  'osxfuse'
   'virtualbox'
   'android-platform-tools'
 
   'google-chrome'
   'google-chrome-canary'
-  'firefox-developeredition'
+  'firefox-developer-edition'
 
   'kap'
   'keybase'
   'caption'
   'puush'
-  'gifski'
   'keepingyouawake'
   'scroll-reverser'
   'spectacle'
