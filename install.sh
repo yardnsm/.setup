@@ -53,7 +53,6 @@ __init_config_repo() {
     fi
   fi
 
-  # Clone the repo!
   commands::execute "git clone $CONFIG_GIT_REMOTE $CONFIG_ROOT" \
     "Cloning base dir"
 }
@@ -64,6 +63,19 @@ __init_submodules() {
 
   commands::execute "git submodule update --init --recursive --remote -q" \
     "Initializing git modules"
+
+  popd &> /dev/null \
+    || return 1
+}
+
+__init_secrets() {
+  pushd "$CONFIG_ROOT" &> /dev/null \
+    || return 1
+
+  if ! [[ -f "$CONFIG_ROOT/smudge.sed" ]]; then
+    commands::execute "sed 's/^.*\({{.*}}\).*$/s\/\1\/value\//' clean.sed > smudge.sed" \
+      "Creating a smudge.sed file for secrets"
+  fi
 
   popd &> /dev/null \
     || return 1
@@ -100,10 +112,13 @@ main() {
   output::welcome_message
 
   # Run checks
-  __init_config_repo
-  __init_submodules
   __check_os
   __check_xcode_tools
+
+  # Initialize required shit
+  __init_config_repo
+  __init_submodules
+  __init_secrets
 
   # Ask if it's okay
   if ! os::is_ci; then

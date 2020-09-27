@@ -81,8 +81,6 @@ output::divider() {
 }
 
 output::error_stream() {
-  echo
-
   while read -r line; do
     echo "↳ ERROR: $line"
   done
@@ -93,7 +91,7 @@ output::welcome_message() {
 
   tput cl
 
-  # shellcheck disable=SC1117
+  # shellcheck disable=SC1117,SC2016,SC1004
   output::blue '
                                      ._
                                    ,(  `-.

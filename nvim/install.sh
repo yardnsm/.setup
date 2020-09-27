@@ -34,12 +34,12 @@ setup_python_venv() {
 
   output::info "Setting Virtual Environment '$venv_name' with version $python_version"
 
-  eval "$(command pyenv init -)"
-
   if ! commands::exists 'pyenv'; then
-    output:error "pyenv does not exist; skipping."
+    output::error "pyenv does not exist; skipping."
     return 1
   fi
+
+  eval "$(command pyenv init -)"
 
   if pyenv virtualenvs | awk '{ print $1 }' | grep -q "$python_version/envs/$venv_name"; then
     output::status "Virtualenv '$venv_name' already exists; skipping."

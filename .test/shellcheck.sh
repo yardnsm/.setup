@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
 cd "$(dirname "${BASH_SOURCE[0]}")" \
-  && source "../.setup/initializer.sh"
+  && source "../.lib/initializer.sh"
 
-# ---------------------------------------------
+# --------------------------------------------------------------------------------------------------
 
 # I realy don't want to add shellcheck as a submodule,
 # so this script assume you got it installed on your machine.
@@ -18,12 +18,6 @@ main() {
 
   find .. \
     -type f \
-    ! -path '../.submodules/*' \
-    ! -path '../.misc/*' \
-    ! -path '../nvim/plugged/*' \
-    ! -path '../coc/extensions/node_modules/*' \
-    ! -path '../alacritty/alacritty/*' \
-    ! -path '../zsh/completions/*' \
     -name '*.sh' \
     -exec shellcheck \
     {} +
