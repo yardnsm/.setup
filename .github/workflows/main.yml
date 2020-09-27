@@ -24,14 +24,14 @@ jobs:
 
       - name: Setting repository in $HOME
         run: |
-          mkdir -p $HOME/dev/.setup
+          mkdir -p $HOME/dev
           mv -f $GITHUB_WORKSPACE/.setup $HOME/dev/.setup
 
       - name: Running installation script
         continue-on-error: true
         run: |
           cd $HOME/dev/.setup
-          ./install ${{ matrix.profile }}
+          ./install.sh ${{ matrix.profile }}
 
       - name: Running tests
         run: |
