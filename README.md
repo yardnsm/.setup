@@ -67,6 +67,8 @@ export TOPICS=(
 
 ----------------------------------------------------------------------------------------------------
 
+###### This repository is a squashed fork of [`yardnsm/.config@053dc7b`](https://github.com/yardnsm/.config/tree/053dc7baaf8ae34d731947d7b6146539b55115a0).
+
 ## License
 
 MIT © [Yarden Sod-Moriah](http://yardnsm.net/)
