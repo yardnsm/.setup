@@ -11,6 +11,6 @@ yay::install() {
   if ( yay -Q "$package" &> /dev/null) ; then
     output::success "$package (already installed)"
   else
-    commands::execute "sudo yay --noconfirm -S $package" "$package"
+    commands::execute "yay --noconfirm -S $package" "$package"
   fi
 }

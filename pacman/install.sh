@@ -26,6 +26,7 @@ declare -r main_packages=(
   "xorg-xrdb"
   "xorg-xinput"
   "xorg-xset"
+  "xorg-xwininfo"
 
   "i3-gaps"
   "dmenu"
@@ -57,6 +58,18 @@ declare -r main_packages=(
   "fzf"
   "neofetch"
   "python-pywal"
+  "mpd"
+  "mpc"
+  "mpv"
+  "man-db"
+  "ntfs-3g"
+  "pulseaudio-alsa"
+  "pulsemixer"
+  "pamixer"
+  "unclutter"
+  "zathura"
+  "youtube-dl"
+  "pyenv"
 )
 
 declare -r aur_packages=(
@@ -78,17 +91,17 @@ declare -r aur_packages=(
 
 __update_configs() {
   # Taken from https://github.com/lukesmithxyz/larbs/blob/master/larbs.sh, cuz why not
-  commands::execute 'grep -q "^Color" /etc/pacman.conf || sed -i "s/^#Color$/Color/" /etc/pacman.conf' \
+  commands::execute 'grep -q "^Color" /etc/pacman.conf || sudo sed -i "s/^#Color$/Color/" /etc/pacman.conf' \
     "Set Color"
 }
 
 __update_keyring() {
-  commands::execute "pacman --noconfirm -Sy archlinux-keyring" \
+  commands::execute "sudo pacman --noconfirm -Sy archlinux-keyring" \
     "Refreshing Arch Keyring"
 }
 
 __install_yay() {
-  if commands::exist 'yay'; then
+  if commands::exists 'yay'; then
     output::success "yay is already installed"
     return
   fi

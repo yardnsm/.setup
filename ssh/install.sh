@@ -34,6 +34,13 @@ main() {
     return 1
   fi
 
+  output::status "This process is recommended to be performed in graphical sessions."
+  ask::prompt_confirmation "Do you want to proceed?"
+  if ! ask::answer_is_yes; then
+    output::status "Aborted"
+    return 1
+  fi
+
   if is_connection_valid; then
     output::success "Connection to GitHub is valid"
   elif [[ -f "${SSH_KEY_PATH}.pub" ]]; then

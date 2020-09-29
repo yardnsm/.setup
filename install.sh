@@ -84,7 +84,26 @@ __init_secrets() {
 
 # --------------------------------------------------------------------------------------------------
 
-main() {
+run_topic() {
+  local topic="$1"
+
+  if [[ -z "$topic" ]]; then
+    output::error "Missing topic to run"
+    output::help
+    exit 1
+  fi
+
+  if ! topics::exists "$topic"; then
+    output::error "Unknown topic: $topic"
+    output::help
+    exit 1
+  fi
+
+  output::status "Please note that this topic might require root privileges"
+  topics::install_single "$topic"
+}
+
+run_profile() {
   export PROFILE=$1
 
   declare -r PROFILE_PATH="./.profiles/$PROFILE"
@@ -138,6 +157,17 @@ main() {
   topics::install_multiple "${TOPICS[*]}"
 
   output::info "Setup is done! You might need to restart your system to see full changes."
+}
+
+# --------------------------------------------------------------------------------------------------
+
+main() {
+  if [[ "$1" == "-t" ]]; then
+    shift
+    run_topic "$@"
+  else
+    run_profile "$@"
+  fi
 }
 
 echo

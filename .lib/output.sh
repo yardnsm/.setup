@@ -70,7 +70,7 @@ output::success() {
 output::result() {
   [[ "$1" -eq 0 ]] \
     && output::success "$2" \
-    || output::error "$2"
+    || output::error "$2 $(output::purple "(exited with $1)")"
 
   return "$1"
 }
@@ -89,7 +89,7 @@ output::error_stream() {
 # Print welcome message
 output::welcome_message() {
 
-  tput cl
+  tput clear
 
   # shellcheck disable=SC1117,SC2016,SC1004
   output::blue '
@@ -131,9 +131,14 @@ output::help() {
   Usage
 
     ./install.sh <profile>
+    ./install.sh -t <topic>
+
+  Options:
+
+    -t      Run a single topic
 
   Available profiles:
 
-    $(ls "$SETUP_ROOT/.profiles")
+    $(find "$SETUP_ROOT/.profiles" ! -name ".profiles" -exec basename {} \; | column)
 EOF
 }

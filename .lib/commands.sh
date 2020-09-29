@@ -48,7 +48,7 @@ commands::execute() {
 #
 # shellcheck disable=SC2155 disable=SC2124
 commands::verify() {
-  local commands="$@"
+local commands=( $@ )
 
   for cmd in "${commands[@]}"; do
     if ! commands::exists "$cmd"; then

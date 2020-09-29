@@ -5,6 +5,10 @@
 These are my setup scripts for setting up a new machine. It installs my
 [dotfiles](https://github.com/yardnsm/.config), which placed by default under `~/.config`.
 
+## Prerequisites
+
+Just make sure you have the recent versions of `git` and `bash`. That's is.
+
 ## Installation
 
 Simply run the following commands in your terminal:
