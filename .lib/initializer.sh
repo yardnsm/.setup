@@ -19,6 +19,8 @@ if [[ -z "$__initialized" ]]; then
   source "./functions/gem.sh"
   source "./functions/npm.sh"
   source "./functions/pip.sh"
+  source "./functions/pacman.sh"
+  source "./functions/yay.sh"
 
   source "./actions.sh"
   source "./ask.sh"

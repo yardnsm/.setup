@@ -5,6 +5,11 @@ cd "$(dirname "${BASH_SOURCE[0]}")" \
 
 # --------------------------------------------------------------------------------------------------
 
+commands::verify "git" \
+  || return 1
+
+# --------------------------------------------------------------------------------------------------
+
 export SETUP_ROOT="$(pwd)"
 export CONFIG_ROOT="$HOME/.config"
 export CONFIG_GIT_REMOTE="https://github.com/yardnsm/.config.git"
@@ -53,7 +58,7 @@ __init_config_repo() {
     fi
   fi
 
-  commands::execute "git clone $CONFIG_GIT_REMOTE $CONFIG_ROOT" \
+  commands::execute "git clone --recursive $CONFIG_GIT_REMOTE $CONFIG_ROOT" \
     "Cloning base dir"
 
 }
@@ -72,17 +77,6 @@ __init_secrets() {
 
   commands::execute "git config --local filter.vault.smudge 'sed -f ~/.config/smudge.sed'" \
     "Setting 'smudge' filter"
-
-  popd &> /dev/null \
-    || return 1
-}
-
-__init_submodules() {
-  pushd "$CONFIG_ROOT" &> /dev/null \
-    || return 1
-
-  commands::execute "git submodule update --init --recursive --remote -q" \
-    "Initializing git modules"
 
   popd &> /dev/null \
     || return 1
@@ -125,7 +119,6 @@ main() {
   output::info "Initializing base dir"
   __init_config_repo
   __init_secrets
-  __init_submodules
 
   # Ask if it's okay
   if ! os::is_ci; then

@@ -8,6 +8,9 @@ cd "$(dirname "${BASH_SOURCE[0]}")" \
 os::verify "linux" \
   || return 1
 
+commands::verify "apt-get" \
+  || return 1
+
 # --------------------------------------------------------------------------------------------------
 
 declare -r packages=(

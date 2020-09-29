@@ -14,14 +14,21 @@ os::get_name() {
 }
 
 # Verify the running os
+# USAGE:
+#
+#   os::verify [--no-output] [...commands]
+#
 # shellcheck disable=SC2155 disable=SC2124
 os::verify() {
   local names="$@"
   local current="$(os::get_name)"
 
   if [[ ! " ${names[*]} " == *" ${current} "* ]]; then
-    output::divider
-    output::status "Not suitable for $current"
+    if [[ "$1" != "--no-output" ]]; then
+      output::divider
+      output::status "Not suitable for $current"
+    fi
+
     return 1
   fi
 }

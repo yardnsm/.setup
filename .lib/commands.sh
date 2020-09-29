@@ -40,3 +40,24 @@ commands::execute() {
 
   return $exit_code
 }
+
+# Verify commands are available in the system
+# USAGE:
+#
+#   commands::verify [--no-output] [...commands]
+#
+# shellcheck disable=SC2155 disable=SC2124
+commands::verify() {
+  local commands="$@"
+
+  for cmd in "${commands[@]}"; do
+    if ! commands::exists "$cmd"; then
+      if [[ "$1" != "--no-output" ]]; then
+        output::divider
+        output::status "Command '$cmd' is required, but it is not present"
+      fi
+
+      return 1
+    fi
+  done
+}

@@ -18,7 +18,7 @@ $ cd dev/.setup
 $ ./install.sh
 ```
 
-## Order and hierarchy
+## Profiles
 
 A "profile" is shell scripts that sets up environment variables which configure the installation of
 the dotfiles. They are located under [`./.profiles`](./.profiles) and should export the following
@@ -62,6 +62,28 @@ export TOPICS=(
   nvim
   ssh
   zsh
+)
+```
+
+### `$PACMAN_EXTRAS`
+
+An array of packages to install via `pacman`, in addition to the packages installed in the "pacman"
+topic.
+
+```bash
+export PACMAN_EXTRAS=(
+  "git"
+)
+```
+
+### `$AUR_EXTRAS`
+
+An array of packages to install via `yay`, in addition to the packages installed in the "pacman"
+topic.
+
+```bash
+export AUR_EXTRAS=(
+  "fnm"
 )
 ```
 

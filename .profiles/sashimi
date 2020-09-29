@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+# Profile for "sashimi": my Arch VM for experimenting.
+# --------------------------------------------------------------------------------------------------
+
+# Extra packages for pacman
+export PACMAN_EXTRAS=(
+  "virtualbox-guest-utils"
+)
+
+export SYMLINKS=(
+  "zsh/.zprofile"
+  "zsh/.zshenv"
+
+  "tmux/tmux.conf .tmux.conf"
+
+  # xrandr profile
+  "xorg/xrandr/sashimi.sh" "${XDG_CONFIG_HOME:-$HOME/.config}/xorg/xrandr/current"
+)
+
+export TOPICS=(
+  common
+  pacman
+
+  coc
+  nvim
+  ssh
+  tmux
+  zsh
+)
