@@ -41,16 +41,16 @@ __symlink_all() {
     else
 
       # Relative to $HOME
-      dest_realpath="$HOME/$item_dest"
+      dest_realpath="$(cd "$HOME" && ${readlink_cmd} -f "$item_dest")"
     fi
 
     if ! [[ -e "$dest_realpath" ]]; then
       commands::execute "ln -sf $src_realpath $dest_realpath" \
-        "$src_realpath -> ~${dest_realpath#$HOME}"
-    elif [[ "$("${readlink_cmd}" "$dest_realpath")" == "$src_realpath" ]]; then
-      output::status "$src_realpath -> ~${dest_realpath#$HOME} (alreay linked)"
+        "$src_realpath -> $dest_realpath"
+    elif [[ "$("${readlink_cmd}" -f "$dest_realpath")" == "$src_realpath" ]]; then
+      output::status "$src_realpath -> $dest_realpath (alreay linked)"
     else
-      output::error "~${dest_realpath#$HOME} already exists, Skipping."
+      output::error "$dest_realpath already exists, Skipping."
     fi
 
   done

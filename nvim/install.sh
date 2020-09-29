@@ -10,7 +10,7 @@ commands::verify "curl" \
 
 # --------------------------------------------------------------------------------------------------
 
-declare -r VIM_PLUG_PATH="$SETUP_ROOT/nvim/autoload/plug.vim"
+declare -r VIM_PLUG_PATH="$CONFIG_ROOT/nvim/autoload/plug.vim"
 declare -r VIM_PLUG_FILE="https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
 
 # --------------------------------------------------------------------------------------------------
