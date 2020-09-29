@@ -46,7 +46,7 @@ commands::execute() {
 #
 #   commands::verify [--no-output] [...commands]
 #
-# shellcheck disable=SC2155 disable=SC2124
+# shellcheck disable=SC2155 disable=SC2124 disable=SC2206
 commands::verify() {
 local commands=( $@ )
 
