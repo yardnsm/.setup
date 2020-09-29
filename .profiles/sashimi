@@ -23,6 +23,7 @@ export TOPICS=(
   pacman
 
   coc
+  python
   nvim
   ssh
   tmux

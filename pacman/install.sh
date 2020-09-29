@@ -13,7 +13,7 @@ commands::verify "pacman" \
 
 # --------------------------------------------------------------------------------------------------
 
-declare -r main_packages=(
+declare main_packages=(
   "curl"
   "base-devel"
   "git"
@@ -70,9 +70,11 @@ declare -r main_packages=(
   "zathura"
   "youtube-dl"
   "pyenv"
+  "nodejs-lts-erbium"
+  "npm"
 )
 
-declare -r aur_packages=(
+declare aur_packages=(
   "xcursor-chromeos"
   "google-chrome"
   "ttf-iosevka"
