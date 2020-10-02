@@ -13,6 +13,7 @@ commands::verify "git" \
 export SETUP_ROOT="$(pwd)"
 export CONFIG_ROOT="$HOME/.config"
 export CONFIG_GIT_REMOTE="https://github.com/yardnsm/.config.git"
+export CONFIG_ENV_FILE="$CONFIG_ROOT/zsh/.zshenv"
 
 # --------------------------------------------------------------------------------------------------
 
@@ -82,6 +83,25 @@ __init_secrets() {
     || return 1
 }
 
+__init_environment_variables() {
+  if [[ -f "$CONFIG_ENV_FILE" ]]; then
+    source "$CONFIG_ENV_FILE"
+  else
+    output::status "Environment file ($CONFIG_ENV_FILE) is not available - maybe the .config"
+    output::status "repository is not initialized correctly. Topics may relay on this file, so"
+    output::status "expect weird behaviour.\n"
+
+    ask::prompt_confirmation "Do you want to proceed?"
+    if ! ask::answer_is_yes; then
+      output::error "Aborted"
+      exit 1
+    fi
+
+    output::divider
+    return 1
+  fi
+}
+
 # --------------------------------------------------------------------------------------------------
 
 run_topic() {
@@ -98,6 +118,8 @@ run_topic() {
     output::help
     exit 1
   fi
+
+  __init_environment_variables
 
   output::status "Please note that this topic might require root privileges"
   topics::install_single "$topic"
@@ -138,6 +160,7 @@ run_profile() {
   output::info "Initializing base dir"
   __init_config_repo
   __init_secrets
+  __init_environment_variables
 
   # Ask if it's okay
   if ! os::is_ci; then

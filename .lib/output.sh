@@ -139,6 +139,10 @@ output::help() {
 
   Available profiles:
 
-    $(find "$SETUP_ROOT/.profiles" ! -name ".profiles" -exec basename {} \; | column)
+$(find "$SETUP_ROOT/.profiles" ! -name ".profiles" -exec basename {} \; | column)
+
+  Available topcis:
+
+$(topics::get_all | column)
 EOF
 }
