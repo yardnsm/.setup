@@ -10,7 +10,6 @@ topics::get_all() {
     ! -name '.*' \
     -exec basename {} \; \
     | sort
-
 }
 
 # Check if a topic exists

@@ -26,6 +26,7 @@ if [[ -z "$__initialized" ]]; then
   source "./ask.sh"
   source "./commands.sh"
   source "./topics.sh"
+  source "./profiles.sh"
   source "./os.sh"
   source "./output.sh"
   source "./spinner.sh"

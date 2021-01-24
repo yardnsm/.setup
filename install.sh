@@ -1,12 +1,7 @@
 #!/usr/bin/env bash
 
 cd "$(dirname "${BASH_SOURCE[0]}")" \
-  && source "./.lib/initializer.sh"
-
-# --------------------------------------------------------------------------------------------------
-
-commands::verify "git" \
-  || return 1
+  || exit 1
 
 # --------------------------------------------------------------------------------------------------
 
@@ -14,6 +9,13 @@ export SETUP_ROOT="$(pwd)"
 export CONFIG_ROOT="$HOME/.config"
 export CONFIG_GIT_REMOTE="https://github.com/yardnsm/.config.git"
 export CONFIG_ENV_FILE="$CONFIG_ROOT/zsh/.zshenv"
+
+# --------------------------------------------------------------------------------------------------
+
+source "./.lib/initializer.sh"
+
+commands::verify "git" \
+  || return 1
 
 # --------------------------------------------------------------------------------------------------
 
@@ -128,22 +130,20 @@ run_topic() {
 run_profile() {
   export PROFILE=$1
 
-  declare -r PROFILE_PATH="./.profiles/$PROFILE"
-
   if [[ -z "$PROFILE" ]]; then
     output::error "Missing profile"
     output::help
     exit 1
   fi
 
-  if ! [[ -f "$PROFILE_PATH" ]]; then
+  if ! profiles::exists "$PROFILE"; then
     output::error "Unknown profile: $PROFILE"
     output::help
     exit 1
   fi
 
   # Load profile
-  source "$PROFILE_PATH"
+  source "$(profiles::get_path "$PROFILE")"
 
   # Make sure it exported the good stuff
   if [[ -z "$SYMLINKS" ]] || [[ -z "$TOPICS" ]]; then

@@ -52,6 +52,8 @@ declare -r formulae=(
   'tree'
   'youtube-dl'
   'binwalk'
+  'apktool'
+  'jadx'
 
   'coreutils'
   'openssl'
