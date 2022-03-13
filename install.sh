@@ -48,6 +48,24 @@ EOF
   fi
 }
 
+__check_rosetta() {
+  if [[ "$(os::get_name)" == 'macos' ]]; then
+    if ! pkgutil --files com.apple.pkg.RosettaUpdateAuto &> /dev/null; then
+      output::error "Rosetta 2 is not installed!"
+
+      cat <<EOF
+
+          Install it via:
+
+            $ sudo softwareupdate --install-rosetta
+
+EOF
+    else
+      output::success "Rosetta 2 is installed"
+    fi
+  fi
+}
+
 # --------------------------------------------------------------------------------------------------
 
 __init_config_repo() {
@@ -156,6 +174,7 @@ run_profile() {
   # Run checks
   __check_os
   __check_xcode_tools
+  __check_rosetta
 
   output::info "Initializing base dir"
   __init_config_repo

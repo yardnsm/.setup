@@ -15,49 +15,29 @@ declare -r applications=(
   '1password-cli'
 
   'oracle-jdk'
-  'osxfuse'
-  'virtualbox'
   'android-platform-tools'
 
   'google-chrome'
   'google-chrome-canary'
   'firefox-developer-edition'
 
-  'kap'
   'keybase'
-  'caption'
-  'puush'
+  'ticktick'
   'keepingyouawake'
   'scroll-reverser'
   'spectacle'
-  'beardedspice'
   'transmission'
-  'slack'
   'spotify'
   'vlc'
   'discord'
   'tunnelblick'
 
   'syncthing'
-  'google-backup-and-sync'
+  'google-drive'
+)
 
-  # ---[ Retired ]----------------------------------------------------------------------------------
-
-  # 'adobe-photoshop-cc'
-  # 'intellij-idea'
-  # 'firefox-nightly'
-  # 'opera'
-  # 'android-file-transfer'
-  # 'keycastr'
-  # 'skype'
-  # 'firefox'
-  # 'vimr'
-  # 'gitup'
-  # 'github-desktop'
-  # 'postman'
-  # 'atom'
-  # 'meld'
-  # 'zeplin'
+declare -r applications_x86=(
+  'virtualbox'
 )
 
 declare -r fonts=(
@@ -68,6 +48,7 @@ declare -r fonts=(
   'font-cousine'
   'font-mononoki'
   'font-iosevka'
+  'font-iosevka-nerd-font'
 
   'font-open-sans'
   'font-open-sans-condensed'
@@ -81,13 +62,19 @@ main() {
   output::info "Install applications"
 
   for app in "${applications[@]}"; do
-    brew::install "$app" 'cask'
+    brew::install "$app" '--cask'
+  done
+
+  output::info "Install x86 applications"
+
+  for app_x86 in "${applications_x86[@]}"; do
+    brew::install "$app_x86" '--cask' 'arch --x86_64 /usr/local/Homebrew/bin/brew'
   done
 
   output::info "Install fonts"
 
   for font in "${fonts[@]}"; do
-    brew::install "$font" 'cask'
+    brew::install "$font" '--cask'
   done
 }
 

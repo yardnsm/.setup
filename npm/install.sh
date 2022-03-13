@@ -6,9 +6,7 @@ cd "$(dirname "${BASH_SOURCE[0]}")" \
 # --------------------------------------------------------------------------------------------------
 
 declare -r dependencies=(
-  'bower'
   'http-server'
-  'gulp'
   'nodemon'
   'json-server'
   'npm-upgrade'
@@ -16,13 +14,15 @@ declare -r dependencies=(
   'np'
   'firebase-tools'
   'ava'
-  'bs-platform'
   'speed-test'
 
   'stylelint-config-standard'
 
   # ---[ Retired ]----------------------------------------------------------------------------------
 
+  # 'bower'
+  # 'gulp'
+  # 'bs-platform'
   # 'hicat'
   # 'yo'
   # 'typescript'

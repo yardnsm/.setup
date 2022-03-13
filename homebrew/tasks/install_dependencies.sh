@@ -5,6 +5,7 @@
 declare -r formulae=(
   'rbenv'
   'git'
+  'subversion'
   'zsh'
   'neovim'
   'tmux'
@@ -24,12 +25,9 @@ declare -r formulae=(
   'pyenv-pip-migrate'
   'pyenv-virtualenv'
   'poetry'
-
-  'mongo'
   'mysql'
 
   'docker'
-  'docker-machine'
 
   'wget'
   'tig'
@@ -44,7 +42,6 @@ declare -r formulae=(
   'readline'
   'syncthing'
   'asciinema'
-  'm-cli'
   'neofetch'
   'htop'
   'cowsay'
@@ -57,19 +54,9 @@ declare -r formulae=(
 
   'coreutils'
   'openssl'
-  'libxml2'
-  'mhash'
-  'mcrypt'
-  'ntfs-3g'
 
-  # ---[ Retired ]----------------------------------------------------------------------------------
-
-  # 'phantomjs'
-  # 'sudolikeaboss'
-  # 'hub'
-  # 'git-extras'
-  # 'yarn'
-  # 'heroku'
+  # From the mongodb/brew tap
+  'mongodb-community@5.0'
 )
 
 # --------------------------------------------------------------------------------------------------

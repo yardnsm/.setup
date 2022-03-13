@@ -15,10 +15,9 @@ export SYMLINKS=(
 )
 
 export TOPICS=(
-  common
   homebrew
+  common
 
-  coc
   fnm
   macos
   npm
@@ -28,5 +27,4 @@ export TOPICS=(
   ruby
   ssh
   tmux
-  zsh
 )

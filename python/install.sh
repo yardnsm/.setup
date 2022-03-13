@@ -12,17 +12,34 @@ declare -r pips=(
   'flake8'
   'jedi'
   'neovim'
-  'pypcap'
-  'python-language-server[all]'
-
   'virtualenv'
   'pipenv'
-
   'scapy'
-  'pyx'
 )
 
 # --------------------------------------------------------------------------------------------------
+
+__install_pyenv_python() {
+  if ! commands::exists 'pyenv'; then
+    output::error "pyenv does not exist; skipping."
+    return 1
+  fi
+
+  if [[ -z "$PYENV_VERSION" ]]; then
+    output::error "\$PYENV_VERSION is not set; skipping."
+    return 1
+  fi
+
+  eval "$(command pyenv init -)"
+
+  if pyenv versions | grep -q "$PYENV_VERSION"; then
+    output::success "Version $PYENV_VERSION already installed."
+    return 0
+  fi
+
+  commands::execute "pyenv install $PYENV_VERSION" \
+    "Installing Python $PYENV_VERSION"
+}
 
 __install_pyenv_virtualenv() {
   if ! commands::exists 'pyenv'; then
@@ -41,6 +58,9 @@ __install_pyenv_virtualenv() {
 # --------------------------------------------------------------------------------------------------
 
 main() {
+  output::info "Installing python via pyenv"
+  __install_pyenv_python
+
   output::info "Installing pips"
 
   for pip in "${pips[@]}"; do

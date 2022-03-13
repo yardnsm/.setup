@@ -40,3 +40,9 @@ output::info "iTerm2"
 
 commands::execute "defaults write com.googlecode.iterm2 PromptOnQuit -bool false" \
   "Do not display the annoying prompt when quitting iTerm"
+
+commands::execute "defaults write com.googlecode.iterm2 PrefsCustomFolder -string '/Users/yardnsm/.config/iterm'" \
+  "Set custom preferences folder"
+
+commands::execute "defaults write com.googlecode.iterm2 LoadPrefsFromCustomFolder -bool true" \
+  "Use custom preferences"

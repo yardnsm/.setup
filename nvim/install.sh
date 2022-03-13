@@ -28,8 +28,19 @@ install_plugins() {
   if os::is_ci; then
     output::status "Skipping inside a CI"
   else
-    commands::execute "nvim -c 'PlugInstall' -c 'UpdateRemotePlugins' -c 'qall'" \
-      "Installing plugins"
+
+    # For some reason, `PlugInstall` hates output::execute
+    nvim -c 'PlugInstall' -c 'UpdateRemotePlugins' -c 'qall' &> /dev/null
+    output::result $? "Installed plugins"
+  fi
+}
+
+install_lsp_servers() {
+  if os::is_ci; then
+    output::status "Skipping inside a CI"
+  else
+    commands::execute "nvim -c 'LspInstallAll' -c 'qall'" \
+      "Installing LSP servers"
   fi
 }
 
@@ -60,10 +71,10 @@ setup_python_venv() {
   pyenv activate "$venv_name" &> /dev/null
   output::result "$?" " --> Activating virtualenv $venv_name"
 
-  commands::execute "pip install neovim pynvim" \
+  commands::execute "pip3 install neovim pynvim" \
     "Installing neovim pip module"
 
-  commands::execute "pip install python-language-server jedi" \
+  commands::execute "pip3 install python-language-server jedi" \
     "Installing additional pipes"
 
   pyenv deactivate &> /dev/null
@@ -78,9 +89,10 @@ main() {
 
   output::info "Installing plugins"
   install_plugins
+  install_lsp_servers
 
-  setup_python_venv "neovim3" "3.6.3"
-  setup_python_venv "neovim2" "2.7.13"
+  setup_python_venv "neovim3" "3.9.1"
+  # setup_python_venv "neovim2" "2.7.13"
 }
 
 main "$@"

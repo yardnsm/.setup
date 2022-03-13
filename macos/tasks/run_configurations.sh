@@ -65,9 +65,9 @@ commands::execute "defaults write NSGlobalDomain NSAutomaticQuoteSubstitutionEna
 commands::execute "defaults write NSGlobalDomain NSAutomaticDashSubstitutionEnabled -bool false" \
   "Disable smart dashes"
 
-commands::execute "defaults write com.apple.universalaccess closeViewScrollWheelToggle -bool true &&
-  defaults write com.apple.universalaccess HIDScrollZoomModifierMask -int 262144" \
-  "Use scroll gesture with the Ctrl (^) modifier key to zoom"
+# commands::execute "defaults write com.apple.universalaccess closeViewScrollWheelToggle -bool true &&
+#   defaults write com.apple.universalaccess HIDScrollZoomModifierMask -int 262144" \
+#   "Use scroll gesture with the Ctrl (^) modifier key to zoom"
 
 # --------------------------------------------------------------------------------------------------
 

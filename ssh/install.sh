@@ -10,7 +10,7 @@ declare -r SSH_KEY_PATH="$HOME/.ssh/github"
 # --------------------------------------------------------------------------------------------------
 
 is_connection_valid() {
-  ssh -T git@github.com &> /dev/null
+  ssh -T git@github.com -o StrictHostKeyChecking=no &> /dev/null
   [[ $? -eq 1 ]]
 }
 
