@@ -27,4 +27,6 @@ export TOPICS=(
   ruby
   ssh
   tmux
+  rust
+  cargo
 )
