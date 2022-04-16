@@ -34,6 +34,8 @@ declare -r applications=(
 
   'syncthing'
   'google-drive'
+
+  'docker'
 )
 
 declare -r applications_x86=(
@@ -50,6 +52,7 @@ declare -r fonts=(
   'font-iosevka'
   'font-iosevka-nerd-font'
 
+  'font-heebo'
   'font-open-sans'
   'font-open-sans-condensed'
   'font-open-sans-hebrew'
