@@ -7,6 +7,7 @@ declare -r applications=(
   'sequel-pro'
   'wireshark'
   'hex-fiend'
+  'burp-suite'
 
   'android-studio'
   'visual-studio-code'
@@ -22,6 +23,7 @@ declare -r applications=(
   'firefox-developer-edition'
 
   'keybase'
+  'obsidian'
   'ticktick'
   'keepingyouawake'
   'scroll-reverser'

@@ -19,6 +19,8 @@ declare -r formulae=(
   'Schniz/tap/fnm'
   'node'
 
+  'go'
+
   'python'
   'python3'
   'pyenv'
@@ -54,6 +56,7 @@ declare -r formulae=(
 
   'coreutils'
   'openssl'
+  'unicorn'
 
   # From the mongodb/brew tap
   'mongodb-community@5.0'
