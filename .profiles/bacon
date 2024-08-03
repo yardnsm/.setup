@@ -16,7 +16,7 @@ export SYMLINKS=(
 
 export TOPICS=(
   homebrew
-  common
+  symlink
 
   fnm
   macos

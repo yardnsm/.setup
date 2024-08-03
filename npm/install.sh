@@ -15,6 +15,8 @@ declare -r dependencies=(
   'speed-test'
 )
 
+# --------------------------------------------------------------------------------------------------
+
 main() {
   output::info "Installing NPM global dependencies"
 
