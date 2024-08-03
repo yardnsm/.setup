@@ -19,56 +19,58 @@ commands::verify "git" \
 
 # --------------------------------------------------------------------------------------------------
 
-__check_os() {
+check_os() {
   local -r os="$(os::get_name)"
 
-  if [[ "$os" == 'dafuk' ]]; then
-    output::error "Don't even try."
+  if [[ -z "$os" ]]; then
+    output::error "Unsupported OS"
     exit 1
   fi
 
   output::success "Running on $os"
 }
 
-__check_xcode_tools() {
-  if [[ "$(os::get_name)" == 'macos' ]]; then
-    if ! xcode-select --print-path &> /dev/null; then
-      output::error "Xcode Command Line tools are not installed!"
+check_xcode_tools() {
+  os::verify --no-output "macos" \
+    || return 1
 
-      cat <<EOF
+  if ! xcode-select --print-path &> /dev/null; then
+    output::error "Xcode Command Line tools are not installed!"
+
+    cat <<EOF
 
           Install them via:
 
             $ xcode-select --install
 
 EOF
-    else
-      output::success "Xcode Command Line tools are installed"
-    fi
+  else
+    output::success "Xcode Command Line tools are installed"
   fi
 }
 
-__check_rosetta() {
-  if [[ "$(os::get_name)" == 'macos' ]]; then
-    if ! pkgutil --files com.apple.pkg.RosettaUpdateAuto &> /dev/null; then
-      output::error "Rosetta 2 is not installed!"
+check_rosetta() {
+  os::verify --no-output "macos" \
+    || return 1
 
-      cat <<EOF
+  if ! pkgutil --files com.apple.pkg.RosettaUpdateAuto &> /dev/null; then
+    output::error "Rosetta 2 is not installed!"
+
+    cat <<EOF
 
           Install it via:
 
             $ sudo softwareupdate --install-rosetta
 
 EOF
-    else
-      output::success "Rosetta 2 is installed"
-    fi
+  else
+    output::success "Rosetta 2 is installed"
   fi
 }
 
 # --------------------------------------------------------------------------------------------------
 
-__init_config_repo() {
+init_config_repo() {
   if [[ -d "$CONFIG_ROOT" ]]; then
     if [[ -d "$CONFIG_ROOT/.git" ]]; then
       output::success "Base dir exists"
@@ -84,7 +86,7 @@ __init_config_repo() {
 
 }
 
-__init_secrets() {
+init_secrets() {
   pushd "$CONFIG_ROOT" &> /dev/null \
     || return 1
 
@@ -103,23 +105,23 @@ __init_secrets() {
     || return 1
 }
 
-__init_environment_variables() {
+init_environment_variables() {
   if [[ -f "$CONFIG_ENV_FILE" ]]; then
     source "$CONFIG_ENV_FILE"
-  else
-    output::status "Environment file ($CONFIG_ENV_FILE) is not available - maybe the .config"
-    output::status "repository is not initialized correctly. Topics may relay on this file, so"
-    output::status "expect weird behaviour.\n"
-
-    ask::prompt_confirmation "Do you want to proceed?"
-    if ! ask::answer_is_yes; then
-      output::error "Aborted"
-      exit 1
-    fi
-
-    output::divider
-    return 1
+    return
   fi
+
+  output::status "Environment file ($CONFIG_ENV_FILE) is not available - maybe the .config"
+  output::status "repository is not initialized correctly. Topics may relay on this file, so"
+  output::status "expect weird behaviour.\n"
+
+  ask::prompt_confirmation "Do you want to proceed?"
+  if ! ask::answer_is_yes; then
+    output::error "Aborted"
+    exit 1
+  fi
+
+  output::divider
 }
 
 # --------------------------------------------------------------------------------------------------
@@ -139,7 +141,7 @@ run_topic() {
     exit 1
   fi
 
-  __init_environment_variables
+  init_environment_variables
 
   output::status "Please note that this topic might require root privileges"
   topics::install_single "$topic"
@@ -172,14 +174,14 @@ run_profile() {
   output::welcome_message
 
   # Run checks
-  __check_os
-  __check_xcode_tools
-  __check_rosetta
+  check_os
+  check_xcode_tools
+  check_rosetta
 
   output::info "Initializing base dir"
-  __init_config_repo
-  __init_secrets
-  __init_environment_variables
+  init_config_repo
+  init_secrets
+  init_environment_variables
 
   # Ask if it's okay
   if ! os::is_ci; then

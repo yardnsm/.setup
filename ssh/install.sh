@@ -24,8 +24,6 @@ verify_connection() {
   done
 }
 
-# --------------------------------------------------------------------------------------------------
-
 main() {
   output::info "Generating SSH key for GitHub"
 

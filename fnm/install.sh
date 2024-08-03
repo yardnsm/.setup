@@ -12,7 +12,7 @@ declare -r FNM_INSTALL_FILE="https://raw.githubusercontent.com/Schniz/fnm/master
 
 # We're installing fnm via Homebrew under macOS
 os::verify "macos" \
-  || return 1
+  && return 1
 
 # --------------------------------------------------------------------------------------------------
 

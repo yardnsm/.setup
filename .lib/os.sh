@@ -9,7 +9,7 @@ os::get_name() {
   elif [[ "$(uname -s)" == "Darwin" ]]; then
     echo 'macos'
   else
-    echo 'dafuq'
+    echo ''
   fi
 }
 

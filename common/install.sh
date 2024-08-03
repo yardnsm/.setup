@@ -5,12 +5,11 @@ cd "$(dirname "${BASH_SOURCE[0]}")" \
 
 # --------------------------------------------------------------------------------------------------
 
-__symlink_all() {
+symlink_all() {
   local readlink_cmd="readlink"
 
+  # Use greadlink on the mac
   if [[ "$(os::get_name)" == "macos" ]]; then
-
-    # Use greadlink on the mac
     readlink_cmd="greadlink"
   fi
 
@@ -59,11 +58,9 @@ __symlink_all() {
     || return 1
 }
 
-# --------------------------------------------------------------------------------------------------
-
 main() {
-  output::info "Symlinking and shit"
-  __symlink_all
+  output::info "Symlinking files"
+  symlink_all
 }
 
 main "$@"
