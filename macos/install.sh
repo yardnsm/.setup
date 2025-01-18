@@ -76,6 +76,12 @@ main() {
   commands::execute "defaults write NSGlobalDomain NSAutomaticDashSubstitutionEnabled -bool false" \
     "Disable smart dashes"
 
+  commands::execute "defaults write NSGlobalDomain AppleEnableSwipeNavigateWithScrolls -bool false" \
+    "Sisable the FU%@!!ING 'Swipe between pages' thing"
+
+  commands::execute "defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadThreeFingerHorizSwipeGesture -bool false" \
+    "Sisable the FU%@!!ING 'Swipe between pages' thing (for 3 fingers this time)"
+
   # commands::execute "defaults write com.apple.universalaccess closeViewScrollWheelToggle -bool true &&
   #   defaults write com.apple.universalaccess HIDScrollZoomModifierMask -int 262144" \
   #   "Use scroll gesture with the Ctrl (^) modifier key to zoom"
@@ -91,6 +97,9 @@ main() {
 
   commands::execute "defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false" \
     "Disable auto-correct"
+
+  commands::execute 'defaults write NSGlobalDomain AppleICUDateFormatStrings -dict-add "1" "y-MM-dd"' \
+    "Change date format to YYYY-MM-DD"
 
   # }}}
   output::info "Finder" # {{{

@@ -65,6 +65,7 @@ declare -r formulae=(
 
 declare -r applications=(
   'iterm2'
+  'ghostty'
   'sequel-pro'
   'wireshark'
   'hex-fiend'
